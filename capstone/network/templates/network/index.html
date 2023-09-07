@@ -1,0 +1,166 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+    <br>
+
+    <div class="jumbotron">
+
+        <div class="row">
+        
+            <div class="col" style="text-align: center; border-style:solid; border-color: rgb(125, 109, 167);">
+                
+                <div class="row" style="text-align: center; color: #1aff94; font-weight: 100; font-size: 30px; padding-bottom: 0.5cm;">
+                    {% if user.is_authenticated %}
+                        {{request.user.username}}'s Daily Tracker
+                    {% else %}
+                        Daily Tracker
+                    {% endif %}
+                </div>
+
+                <div class="row" style="text-align: center; color: #1aff94; font-weight: 100; font-size: 20px; padding-bottom: 0.5cm;">
+                    <div style="margin-left:2.5cm;">{{date}}</div>
+                </div>
+                
+                <div class="row" id="meter">
+                    <svg width="250" height="250" viewBox="-31.25 -31.25 312.5 312.5" version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
+                        <circle r="115" cx="125" cy="125" fill="transparent" stroke="#e0e0e0" stroke-width="9" stroke-dasharray="722.2px" stroke-dashoffset="0"></circle>
+                        {% if user.is_authenticated %}
+                            <circle id="progress-meter" r="115" cx="125" cy="125" stroke="#1aff94" stroke-width="14" stroke-linecap="round" stroke-dashoffset="{{total}}px" fill="transparent" stroke-dasharray="722.2px"></circle>
+                            <text id="progress-reading" x="75px" y="140px" fill="#1aff94" font-size="46px" font-weight="bold" style="transform:rotate(90deg) translate(0px, -246px)">{{percent}}%</text>
+                        {% else %}
+                            <circle id="progress-meter" r="115" cx="125" cy="125" stroke="#1aff94" stroke-width="14" stroke-linecap="round" stroke-dashoffset="722.2px" fill="transparent" stroke-dasharray="722.2px"></circle>
+                            <text id="progress-reading" x="75px" y="140px" fill="#1aff94" font-size="46px" font-weight="bold" style="transform:rotate(90deg) translate(0px, -246px)">N/A</text>
+                        {% endif %}
+                            
+                    </svg>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="col-6" style="border-style:solid; border-color:rgb(125, 109, 167); text-align: center;">
+
+                <div style="text-align: center; color: #1aff94; font-weight: 100; font-size: 30px; padding-bottom: 0.5cm;">
+                    Entries:
+                </div>
+
+                <div class="row" style="border-style:solid; border-top-color:white; border-bottom-color:white; border-right-color:rgb(125, 109, 167); border-left-color:rgb(125, 109, 167);">
+                    <div class="col" style="text-align: left; color: #1aff94;">Name</div>
+                    <div class="col" style="text-align: right; color: #1aff94;">Amount</div>
+                    <div class="col" style="text-align: right; color: #1aff94;">Calories</div>
+                    <div class="col"></div>
+                </div>
+
+                <div id="new_entries">
+                {% if user.is_authenticated %}
+
+                    {% for entry in entries %}
+
+                        <div class="row" id="{{entry.id}}">
+                            <div class="col" style="text-align: left; color: #ffffff;">
+                                {{entry.name}}
+                            </div>
+                            <div class="col" style="text-align: right; color: #ffffff;">
+                                {{entry.amount}}
+                            </div>
+                            <div class="col" style="text-align: right; color: #ffffff;">
+                                {{entry.value}}
+                            </div>
+                            <div class="col">
+                                <button type="button" onclick="remove('{{ entry.id }}', '{{ date }}')" class="close" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+                    <div class="row" style="text-align: center; color: #1aff94; margin-top: 2cm; font-size: 20px;">Register and Login to being making Entries for the tracker</div>
+                {% endif %}
+
+                </div>
+
+
+
+            </div>
+        
+
+
+
+
+            <div class="col"  style="text-align: center; border-style:solid; border-style:solid; border-color: rgb(125, 109, 167);">
+                
+                <div style="text-align: center; color: #1aff94; font-weight: 100; font-size: 30px; padding-bottom: 0.5cm;">
+                    Stats:
+                </div>
+
+                {% if user.is_authenticated %}
+                    <ul>
+                        <li id="age">Age: {{stats.age}}</li>
+                        <li id="height">Height in cm: {{stats.height}}</li>
+                        <li id="weight">Weight in Kg: {{stats.weight}}</li>
+                        <li id="bmr">BMR: {{stats.bmr}} calories</li>    
+                    </ul>
+                {% else %}
+                    <ul>
+                        <li id="age">Age: N/A</li>
+                        <li id="height">Height in cm: N/A</li>
+                        <li id="weight">Weight in Kg: N/A</li>
+                        <li id="bmr">BMR: N/A</li>    
+                    </ul>       
+                {% endif %} 
+
+            </div>
+        
+        </div>
+
+
+    </div>
+
+    {% if user.is_authenticated %}
+
+        <div id="entry-button" style="padding: 0cm; margin: 0.5cm; background-color: rgb(255, 255, 255); border-radius:20px; color: #1aff94;">
+            
+            <div class="col" style="margin-bottom:1cm;">
+            <button onclick="create_entry('{{ date }}')" type="button" class="btn btn-primary btn-lg" style="background-color: rgb(125, 109, 167); color: #aefdd8; border-radius: 10px; font-size: 15px;">New Entry</button>
+            </div>
+
+            <div class="col" style="color: #000000;">
+            <form method="post" action="{% url 'change_date' %}">
+            {% csrf_token %}
+                {{form|crispy}}
+            <input type="submit">
+            </form> 
+            </div>
+    
+            <div class="col"></div>
+
+        </div>
+
+        <br>
+        <div class="row" style="margin: 0.5cm;">
+            <div class="col" id="entry-form"></div>
+            <div class="col-6"></div>
+            <div class="col"></div>
+        </div>
+
+
+        
+
+
+    {% endif %} 
+
+    {% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
+    {% endblock %}
+
+    
+
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% load embed_video_tags %}
+
+{% block body %}
+
+    <h3 style="text-align: center; margin-top: 0.5cm; margin-bottom: 0.5cm;">Saved Workouts</h3>
+
+
+    
+        {% for workout in workouts %}
+
+        <div id="entire_post{{workout.id}}" class="row" style="margin-bottom: 1cm; margin-right: 2cm; margin-left: 2cm; background-color: rgb(162, 238, 252); border-radius: 0.5cm; padding: 0.5cm;">
+
+                {% video workout.link as my_link %}
+            
+                <div class="col">
+                    {% video my_link '100% x 100%' %}
+                </div>    
+
+                <div class="col">
+                    <div><b>Title: {{workout.title}}</b></div>
+                    <div>Posted by: {{workout.creator}}</div>   
+                    <br>   
+                    <div>Description: {{workout.description}}</div>
+                    <br><br><br><br><br><br><br><br>
+
+                    {% if user != workout.creator %}
+
+                        <div id="button{{workout.id}}" onclick="save('{{ workout.id }}')" style="text-align: right;">  
+                        
+                        {% if user in workout.savers.all %}
+                            <button type="button" class="btn btn-primary btn-lg" style="background-color: red;">Unsave</button>
+                        {% else %}
+                            <button type="button" class="btn btn-primary btn-lg">Save</button>
+                        {% endif %}
+                            
+                        
+                        </div>  
+                    {% else %}
+                        <div id="delete{{workout.id}}" onclick="delete_workout('{{ workout.id }}')" style="text-align: right;"> 
+                            <button type="button" class="btn btn-primary btn-lg" style="background-color: red;">DELETE</button>
+                            <div>Your Post</div>
+                        </div>
+                    {% endif %}
+
+                </div>
+                
+
+                {% endvideo %}
+
+        </div>
+        {% endfor %}
+
+
+
+        <footer>
+
+            <div class="row">
+                <div class="col text-center">
+                    {% if workouts.has_previous %}
+                        <a href=" ?page={{ workouts.previous_page_number }}" id="previous-button" class="btn btn-info">Previous</a>
+                    {% endif %}
+                </div>
+        
+                <div id= "page_number" class="col text-center">{{workouts.number}} of {{workouts.paginator.num_pages}}</div>
+                
+                <div class="col text-center">
+                    {% if workouts.has_next %}
+                        <a href=" ?page={{ workouts.next_page_number }}" id="next-button" class="btn btn-info">Next</a>
+                    {% endif %}
+                </div>
+            </div>
+        
+        </footer>
+
+
+
+
+
+    {% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
+    {% endblock %}
+
+
+{% endblock %}
