@@ -1,0 +1,111 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="row">
+
+    <div class="col text-left"></div>
+
+    <div class="col text-center">
+        <h3 style="text-align: center;" id="title"> Following Posts</h3>
+    </div>
+    
+    <div class="col text-right" style="padding-right: 1cm;" id="follow-button">
+        Users followed: {{follow_count}}
+    </div>
+
+</div>
+
+<br>
+
+<div id="allposts">
+
+
+    {% for post in posts %}
+        <div class="jumbotron" id="post{{post.id}}">
+            <div>
+                <div class="row">
+                    <div class="col-sm-1">
+                        <b>
+                            <a href="/profile/{{post.user.id}}">{{post.user}}</a>
+                        </b>
+                    </div>
+                    
+                    <div class="col-sm-11">
+                        <div>|| {{post.user.email}} || {{post.date}}</div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                    <div class="col">
+                      {{post.text}}
+                    </div>
+                    <div class="col-md-auto">
+
+                        {% if user != post.user %}
+
+                            {% if user in post.reaction.all %}
+                                <div style="align-items: right;" id="like_button{{post.id}}" onclick="like_switch('{{ post.id }}')">
+
+                                    <button class="btn btn-info" style="background-color: Red; color: White;">Unlike</button>
+                                
+                                </div>
+
+                                <div id="like_count{{post.id}}">Likes: {{post.reaction.count}}</div>
+                            {% else %}
+                                <div style="align-items: right;" id="like_button{{post.id}}" onclick="like_switch('{{ post.id }}')">
+                                    
+                                    <button class="btn btn-info">Like</button>
+                                    
+                                </div>
+
+                                <div id="like_count{{post.id}}">Likes: {{post.reaction.count}}</div>
+
+                            {% endif %}
+
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <br>
+    {% endfor %}
+
+
+</div>
+
+<br>
+<hr>
+<br>
+
+<footer>
+
+    <div class="row">
+        <div class="col text-center">
+            {% if posts.has_previous %}
+                <a href=" ?page={{ posts.previous_page_number }}" id="previous-button" class="btn btn-info">Previous</a>
+            {% endif %}
+        </div>
+
+        <div id= "page_number" class="col text-center">{{posts.number}} of {{posts.paginator.num_pages}}</div>
+        
+        <div class="col text-center">
+            {% if posts.has_next %}
+                <a href=" ?page={{ posts.next_page_number }}" id="next-button" class="btn btn-info">Next</a>
+            {% endif %}
+        </div>
+    </div>
+
+</footer>
+
+
+{% block script %}
+<script src="{% static 'network/index.js' %}"></script>
+{% endblock %}
+
+
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+
+<div class="row">
+
+    <div class="col text-left"></div>
+
+    <div class="col text-center">
+        <h3 style="text-align: center;" id="title"> All Posts </h3>
+    </div>
+    
+    <div class="col text-right" style="padding-right: 1cm;" id="follow-button">
+
+    </div>
+
+</div>
+
+<br>
+
+<div id="allposts">
+
+
+    {% for post in posts %}
+        <div class="jumbotron" id="post{{post.id}}">
+            <div>
+                <div class="row">
+                    <div class="col-sm-1">
+                        <b>
+                        {% if user.is_authenticated %}
+                            <a href="/profile/{{post.user.id}}">{{post.user}}</a>
+                        {% else %}
+                            <a href="{% url 'login' %}">{{post.user}}</a>
+                        {% endif %}
+
+                        </b>
+                    </div>
+                    
+                    <div class="col-sm-11">
+                        <div>|| {{post.user.email}} || {{post.date}}</div>
+                        <div id="edit_status{{post.id}}">{% if post.post_edit == True %} ** Edited ** {% endif %}</div>
+                    </div>
+                </div>
+                <hr>
+
+                <div id="textarea{{post.id}}" class="row">
+
+                    <div id="text{{post.id}}" class="col">{{post.text}}</div>
+
+                    <div class="col-md-auto">
+                    
+                        {% if user != post.user %}
+
+                            {% if user in post.reaction.all %}
+                            
+                                <div style="align-items: right;" id="like_button{{post.id}}" onclick="like_switch('{{ post.id }}')">
+
+                                    <button class="btn btn-info" style="background-color: Red; color: White;">Unlike</button>
+                        
+                                </div>
+                                
+
+
+                                <div id="like_count{{post.id}}">Likes: {{post.reaction.count}}</div>
+                                
+                            {% else %}
+
+                                {% if user.is_authenticated %}
+                                <div style="align-items: right;" id="like_button{{post.id}}" onclick="like_switch('{{ post.id }}')">
+                                    
+                                    <button class="btn btn-info">Like</button>
+                                    
+                                </div>
+                                {% endif %}
+
+                                <div id="like_count{{post.id}}">Likes: {{post.reaction.count}}</div>
+                                
+                            {% endif %}
+
+                        {% else %}
+                                {% if user == post.user %}
+                                <button id="edit_button{{post.id}}" onclick="textarea('{{ post.id }}')" class="btn btn-info" style="background-color: purple; color: White;">Edit Post</button>
+                                {% endif %}
+                        {% endif %}
+                   
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <br>
+    {% endfor %}
+
+
+</div>
+
+<div id="profile_posts"></div>
+
+
+<br>
+<hr>
+<br>
+
+
+
+
+
+
+<footer>
+
+    <div class="row">
+        <div class="col text-center">
+            {% if posts.has_previous %}
+                <a href=" ?page={{ posts.previous_page_number }}" id="previous-button" class="btn btn-info">Previous</a>
+            {% endif %}
+        </div>
+
+        <div id= "page_number" class="col text-center">{{posts.number}} of {{posts.paginator.num_pages}}</div>
+        
+        <div class="col text-center">
+            {% if posts.has_next %}
+                <a href=" ?page={{ posts.next_page_number }}" id="next-button" class="btn btn-info">Next</a>
+            {% endif %}
+        </div>
+    </div>
+
+</footer>
+
+
+{% block script %}
+<script src="{% static 'network/index.js' %}"></script>
+{% endblock %}
+
+
+{% endblock %}

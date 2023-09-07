@@ -1,0 +1,50 @@
+.post-div {
+
+    background-color: rgb(0, 255, 21);
+
+}
+
+.jumbotron
+{
+    padding-top: 2px;
+    padding-bottom:20px;
+    background-color: lightblue;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+  
+.pagination-box{
+    width: calc(100% - 2rem);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    padding: 1rem 0;
+    justify-content: center;
+}
+  
+.box-number,
+.pagination-button{
+    font-size: 1.1rem;
+    background-color: transparent;
+    border: none;
+    margin: 0.25rem 0.25rem;
+    cursor: pointer;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: .2rem;
+}
+  
+.box-number:hover,
+.pagination-button:not(.disabled):hover {
+    background: #fff;
+}
+  
+.box-number.active {
+    color: #fff;
+    background: #0085b6;
+}
