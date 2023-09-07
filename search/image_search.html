@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+
+
+        img{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            }
+        .myDiv{
+                text-align: center;
+                margin: auto;
+                display: flex;
+                display: grid;
+            }
+            input[type=text]{
+                
+
+                width: 50%;
+                box-sizing: border-box;
+                border: 1.75px solid #ccc;
+                border-radius: 25px;
+                font-size: 16px;
+                background-color: rgba(177, 177, 177, 0);
+                background-position: 15px 7px; 
+                background-repeat: no-repeat;
+                background-size:0.75cm;
+                padding: 12px 20px 12px 25px;
+                position:fixed;
+                left: 24%;
+            }
+            input[type=text]:hover{
+                border: 2px solid rgba(182, 182, 182, 0.671);
+            }
+            input[type=text]:active{
+                border: 3px solid rgba(182, 182, 182, 0.671);
+            }
+            input[type=text]::after{
+                border: 3px solid rgba(182, 182, 182, 0.671);
+            }
+
+            input[type=submit]{
+                box-sizing:border-box;
+                width: fit-content;
+                border: 1.00px solid rgb(248, 247, 247);
+                border-radius: 5px;
+                font-size: 16px;
+                background-color: rgb(241, 241, 241);
+                padding: 8px 15px 8px 15px;
+                margin: 10px;
+            }
+
+            input[type=image]{
+                
+                position:absolute;
+                right:22%;
+                border-radius: 50px;
+            }
+
+            .button{
+                box-sizing:border-box;
+                width: fit-content;
+                border: 1.75px solid rgb(248, 247, 247);
+                border-radius: 5px;
+                font-size: 16px;
+                background-color: rgb(241, 241, 241);
+                padding: 8px 15px 8px 15px;
+            }
+
+            .button:hover{border: 1.75px solid rgb(223, 223, 223);}
+            .button:active{border: 1.75px solid rgb(25, 0, 255);}
+            #submit1:hover{border: 1.75px solid rgb(223, 223, 223);}
+            #submit1:active{border: 1.75px solid rgb(25, 0, 255);}
+
+            .button2{
+                box-sizing:border-box;
+                color:rgb(255, 255, 255);
+                width: fit-content;
+                border: 1.75px solid rgb(10, 142, 230);
+                border-radius: 5px;
+                background-color: rgb(26, 119, 240);
+                padding: 8px 15px 8px 15px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size:15px;
+                text-align: right;
+                float:right;
+                margin: 6px 15px 15px 15px;
+            }
+            .button2:hover{background-color: rgb(73, 139, 224);}
+
+            a.right:link{
+                color: rgb(51, 51, 51);
+                text-decoration: none;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size:15px;
+                text-align: right;
+                float:right;
+                margin: 15px;
+            }
+            a.right:hover{
+                text-decoration: underline;
+            }
+            a.right:visited{
+                color: rgb(51, 51, 51);
+            }
+
+            .bottom{
+                position: absolute; bottom: 47px;
+                box-sizing:border-box;
+                color:rgb(68, 68, 68);
+                width:100%;
+                border:1.5px solid rgb(201, 201, 201);
+                border-top-style:none;
+                border-left-style:none;
+                border-right-style:none;
+                background-color: rgb(243, 243, 243);
+                padding: 15.49px 0% 15.49px 2%;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size:13px;
+                text-align:left;
+                float:center;
+            }
+            .bottom2{
+                position: absolute; bottom: 0px;
+                float: left; 
+                box-sizing:border-box;
+                color:rgb(68, 68, 68);
+                width:100%;
+                border:1.5px solid rgb(214, 214, 214);
+                border-top-style:none;
+                border-left-style:none;
+                border-right-style:none;
+                background-color: rgb(243, 243, 243);
+                padding: 15.49px 0% 15.49px 2%;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size:13px;
+                text-align:left;
+                float:center;
+                text-decoration: none;
+            }
+
+        </style>
+        <title>Google Images</title>
+    </head>
+
+
+    <body>
+        <a class="right" href="index.html">Google Search</a>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <img src="google_images_logo.PNG" alt="Google" class="center">
+
+
+        <div class="myDiv">
+            <form method="get" action="http://images.google.com/images">
+                <input type="text" name="q">
+                
+                <input type="image" src="search-icon.webp" alt="submit" width="47" height="47">
+            </form>
+        </div>
+        
+        <div class="bottom">
+            Canada
+            </div>
+    
+            <div class="bottom2">
+                <a style="color: rgb(68, 68, 68); float: left; width: 15%;"  href="https://www.google.com/intl/en_ca/ads/?subid=ww-ww-et-g-awa-a-g_hpafoot1_1!o2&utm_source=google.com&utm_medium=referral&utm_campaign=google_hpafooter&fg=1">Advertising</a>
+                <a style="color: rgb(68, 68, 68); float: left; width: 15%;" href="https://www.google.com/services/?subid=ww-ww-et-g-awa-a-g_hpbfoot1_1!o2&utm_source=google.com&utm_medium=referral&utm_campaign=google_hpbfooter&fg=1">Business</a>
+                <a style="color: rgb(68, 68, 68); float: left; width: 15%;" href="https://google.com/search/howsearchworks/?fg=1">How Search Works</a>
+                <a style="color: rgb(68, 68, 68); float: right; width: 15%;" href="https://www.google.com/preferences?hl=en-CA&fg=1">Settings</a>
+                <a style="color: rgb(68, 68, 68); float: right; width: 15%;" href="https://policies.google.com/terms?hl=en-CA&fg=1">Terms</a>
+                <a style="color: rgb(68, 68, 68); float: right; width: 15%;" href="https://policies.google.com/privacy?hl=en-CA&fg=1">Privacy</a>
+            </div>
+            
+    </body>
+</html>
