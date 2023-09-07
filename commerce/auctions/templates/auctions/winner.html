@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h1 class="page_title" style="text-align:center;">Winner: {{ winner }} </h1>
+    <br><br><br>
+
+    <img src="{{ auction.img }}" alt="connect" style="float: left; max-width: 800px; padding-right: 1cm;">
+    <div class="text1">The User {{winner}} has won the auction for {{auction.item}}, posted by {{auction.seller}}</div>
+
+    <div class="text1">The auctions final price was ${{ price }}</div>
+
+
+    {% endblock %}

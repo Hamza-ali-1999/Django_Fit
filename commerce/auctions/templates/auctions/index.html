@@ -1,0 +1,54 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1 class="page_title" style="text-align:center;">Active Listings:</h1>
+    <br>
+    <ul>
+
+        {% for auction in auctions %}
+            
+            {% if auction.closed == True and auction.latest_bid.latest_bidder == user %}
+            <li> 
+
+                
+                <a href="/listing/{{auction.id}}">
+                <img src="{{auction.img}}" alt="connect" style=" max-width: 300px; height: auto; float: left; padding-right: 1cm;" >
+                </a>
+                <div class="title">{{ auction.item }}</div>
+                <div class="text1">Posted by: {{ auction.seller}} </div>
+                <br>
+                <div class="text1" style="color: green; font-size: 30px;">Congartulations {{user.username}}! you have won this auction for {{ auction.latest_bid }}.</div>
+                <br><br><br><br><br><br><br><br><br>
+
+            </li>
+            {% endif %}
+
+
+
+            {% if auction.closed == False %}
+
+            <li> 
+
+                
+                <a href="/listing/{{auction.id}}">
+                <img src="{{auction.img}}" alt="connect" style=" max-width: 300px; height: auto; float: left; padding-right: 1cm;" >
+                </a>
+                <div class="title">{{ auction.item }}</div>
+                <div class="text1">Posted by: {{ auction.seller}} </div>
+                <br>
+                <div class="text1">Description: {{ auction.description }}</div>
+                <br>
+                <div class="text1">Inital bid: ${{ auction.initial_bid }}</div>
+                <div class="text1">Current bid: {{ auction.latest_bid }}</div>
+
+                <br><br><br><br><br><br><br><br><br>
+
+            </li>
+
+            {% endif %}
+            
+        {% endfor %}
+
+    </ul>
+
+{% endblock %}

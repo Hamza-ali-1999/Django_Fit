@@ -1,0 +1,28 @@
+{% extends "auctions/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+    
+    <h1 class="page_title" style="text-align:center;">Categories:</h1>
+
+    <br><br><br>
+    <div class="container">
+    <div class="row">
+
+        <div class="col">
+            <br>
+            <div class="text1"> Select one of the categories for a filtered active listing search: </div> 
+        </div>
+
+        <div class="col-7">
+            
+            <form method="post" href="/auctions/index.html">
+                {% csrf_token %}
+                {{form|crispy}}
+                <br>
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

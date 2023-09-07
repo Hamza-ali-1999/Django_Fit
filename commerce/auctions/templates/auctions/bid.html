@@ -1,0 +1,20 @@
+{% extends "auctions/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+    <h2>Make a Bid on the Listing: {{ item }} </h2>
+    <br><br>
+    <div>The Highest bid on this item is : {{ latest_bid }} </div>
+    <br><div style="font-weight: lighter;" >note: The bid must be higher than the last bid to be valid.</div>
+    <br>
+    <form method="post" href="/auctions/bid.html">
+        {% csrf_token %}
+        
+            {{form|crispy}}
+        
+            <br>
+        
+            <input type="submit">
+    </form>
+
+{% endblock %}

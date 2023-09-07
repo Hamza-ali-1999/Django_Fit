@@ -1,0 +1,73 @@
+{% extends "auctions/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+
+
+{% if auction.seller == logged_user %}
+
+<a href="/listing/{{auction.id}}/winner">
+<div style="text-align: right;">Close this Listing</div>
+</a>
+<br><br>
+
+{% endif %}       
+
+
+
+
+
+<img src="{{ auction.img }}" alt="connect" style="float: left; max-width: 800px; padding-right: 1cm;">
+
+             
+<h2 class="title">Listing Name: {{ auction.item }}</h2>
+
+<div class="text1">Posted by {{ auction.seller }}</div>            
+
+<br>          
+<div class="text1">Description: {{ auction.description }}</div>
+<div class="text1">Tag: {{auction.category}}</div>
+
+<div style="float: right;">Initial bid: ${{ auction.initial_bid }}</div>
+<br>
+<div style="float: right;">Highest Current Bid: {{ latest_bid }}</div>
+
+<br>
+<a href="/listing/{{auction.id}}/bid"> Make a bid on this item </a>
+<br>
+
+<div class="text1" style="font-weight: bold;">{{ message }}</div>
+
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" name="button_submit2" style="float: right;"> {{ button_str }} </button>
+</form>
+
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
+
+
+<form method="post" href="/auctions/listing.html" style="padding-left: 1cm; padding-top: 2cm;">
+    {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" name="button_submit1">
+</form>
+
+<br><br><br>
+
+{% for comment in comments %}
+    <hr>
+    <ul>
+    <li> 
+        <div class="text1" style="font-weight: bold;" >{{ comment.commenter }} commented at {{ comment.time }}:</div>
+        <div class="text1"> {{ comment.user_comment }} </div>    
+    </li>
+    <br>
+    </ul> 
+    <hr>
+{% endfor %}
+
+{% endblock %}

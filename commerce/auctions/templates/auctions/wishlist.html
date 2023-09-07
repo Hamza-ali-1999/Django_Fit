@@ -1,0 +1,28 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h1 class="page_title" style="text-align:center;">Wishlist:</h1>
+    <br><br><br>
+
+    {% for wishlist in wishlists %}
+    <ul>
+    <li> 
+
+        <a href="/listing/{{wishlist.wishlist_items.id}}">
+        <img src="{{wishlist.wishlist_items.img}}" alt="connect" style=" max-width: 300px; height: auto; float: left; padding-right: 1cm;" >
+        </a>
+        <div class="title">{{ wishlist.wishlist_items.item }}</div>
+        <div class="text1">Posted by: {{ wishlist.wishlist_items.seller}} </div>
+        <br>
+        <div class="text1">Description: {{ wishlist.wishlist_items.description }}</div>
+        <br>
+        <div class="text1">Inital bid: ${{ wishlist.wishlist_items.initial_bid }}, Current bid: {{ wishlist.wishlist_items.latest_bid }}</div>
+
+        <br><br><br><br><br><br><br><br>
+
+    </li>
+    </ul>
+    {% endfor %}
+
+{% endblock %}
